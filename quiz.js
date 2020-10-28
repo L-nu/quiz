@@ -1,4 +1,29 @@
-function buildQuiz() {
+function buildQuiz(questions, container) {
+    var output = [];
+    var answers;
+
+    
+    for (var i = 0; i < questions.length; i++) {
+
+        answers = [];
+
+
+        for (letter in questions[i].choices) {
+
+            answers.push(
+                '<label>' +
+                '<input type="radio" name="question' + i + '" value="' + letter + '">' +
+                letter + ': ' +
+                questions[i].choices[letter] +
+                '</label>'
+            );
+        }
+        output.push(
+            '<div class="question">' + questions[i].question + '</div>' +
+            '<div class="answers">' + answers.join('') + '</div>'
+        );
+    }
+    container.innerHTML = output.join('');
 
 }
 
@@ -12,11 +37,7 @@ var submit = document.getElementById("submit")
 
 var results = document.getElementById("results")
 
-buildQuiz()
 
-submit.addEventListener("click", function () {
-    showResults()
-});
 
 var myQuestions = [{
         question: "The tourist attraction Big Ben in London is:",
@@ -71,3 +92,8 @@ var myQuestions = [{
 
 
 
+buildQuiz(myQuestions, quiz) 
+
+submit.addEventListener("click", function () {
+    showResults()
+});
